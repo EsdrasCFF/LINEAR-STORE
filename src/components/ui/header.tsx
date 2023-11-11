@@ -21,7 +21,6 @@ export function Header() {
     await signOut();
   }
 
-
   return (
     <Card className="flex justify-between items-center p-[1.875rem]">
       <Sheet>
@@ -59,12 +58,6 @@ export function Header() {
           )}
 
           <div className="mt-4 flex flex-col gap-2">
-            {status === "authenticated" && (
-              <Button onClick={handleLogoutClick} variant="outline" className="w-full justify-start gap-2" >
-                <LogOutIcon size={16} />
-                Fazer Logout
-              </Button>
-            )}
 
             {status === "unauthenticated" && (
               <Button onClick={handleLoginClick} variant="outline" className="w-full justify-start gap-2" >
@@ -87,6 +80,13 @@ export function Header() {
               <ListOrderedIcon size={16} />
               Catálogo
             </Button>
+            
+            {status === "authenticated" && (
+              <Button onClick={handleLogoutClick} variant="outline" className="w-full justify-start gap-2" >
+                <LogOutIcon size={16} />
+                Fazer Logout
+              </Button>
+            )}
           </div>
         </SheetContent>
       </Sheet>
