@@ -10,8 +10,8 @@ interface ProductItemProps {
 
 export function ProductItem({product}: ProductItemProps) {
   return (
-    <div className=" flex max-w-[156px] flex-col gap-4" >
-      <div className="relative flex h-[170px] w-[156px] items-center justify-center rounded-lg bg-accent" >
+    <div className=" flex max-w-[170px] flex-col gap-4" >
+      <div className="relative flex h-[170px] w-[170px] items-center justify-center rounded-lg bg-accent" >
         <Image
           src={product.imageUrls[0]}
           height={0}
@@ -41,13 +41,13 @@ export function ProductItem({product}: ProductItemProps) {
         <div className="flex items-center gap-2">
           {product.discountPercentage > 0 && (
             <>
-              <span className='font-semibold'>{ priceFormatter.format(product.totalPrice)}</span>
-              <span className='line-through opacity-50 text-sm'>{priceFormatter.format(Number(product.basePrice))}</span>
+              <span className='font-semibold overflow-hidden whitespace-nowrap text-ellipsis'>{ priceFormatter.format(product.totalPrice)}</span>
+              <span className='line-through opacity-50 overflow-hidden text-ellipsis whitespace-nowrap text-xs'>{priceFormatter.format(Number(product.basePrice))}</span>
             </>
           )}
 
           {product.discountPercentage === 0 && (
-            <span className='text-sm font-semibold' > {priceFormatter.format(Number(product.basePrice))} </span>
+            <span className='font-semibold overflow-hidden whitespace-nowrap text-ellipsis' > {priceFormatter.format(Number(product.basePrice))} </span>
           )}
         </div>
       </div>
