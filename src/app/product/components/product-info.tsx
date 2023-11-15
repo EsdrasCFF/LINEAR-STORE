@@ -2,10 +2,10 @@
 
 import { ProductWithTotalPrice } from "@/helpers/product";
 import {priceFormatter} from "@/helpers/formatter"
-import { ArrowDownIcon, ArrowLeft, ArrowRight, TruckIcon } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { ArrowLeft, ArrowRight, TruckIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { DiscountBadge } from "@/components/ui/discount-badge";
 
 interface ProductInfoPros {
   product: Pick<
@@ -37,10 +37,9 @@ export function ProductInfo({product:{basePrice, description, discountPercentage
       <div className="flex items-center gap-2" >
         <h1 className="text-xl font-bold" >{priceFormatter.format(totalPrice)}</h1>
         {discountPercentage > 0 && (
-          <Badge className="px-2 py-[2px]">
-            <ArrowDownIcon size={14}/>
+          <DiscountBadge>
             {discountPercentage}% 
-          </Badge>
+          </DiscountBadge>
         )}
       </div>
 
