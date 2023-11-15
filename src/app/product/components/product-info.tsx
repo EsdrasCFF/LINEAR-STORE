@@ -4,23 +4,18 @@ import { ProductWithTotalPrice } from "@/helpers/product";
 import {priceFormatter} from "@/helpers/formatter"
 import { ArrowLeft, ArrowRight, TruckIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { DiscountBadge } from "@/components/ui/discount-badge";
+import { CartContext } from "@/contexts/cart";
 
 interface ProductInfoPros {
-  product: Pick<
-    ProductWithTotalPrice,
-    "basePrice"
-    | "description"
-    | "discountPercentage"
-    | "totalPrice"
-    | "name"
-  >
+  product: ProductWithTotalPrice
 }
 
-
-export function ProductInfo({product:{basePrice, description, discountPercentage, totalPrice, name}}: ProductInfoPros ) {
+export function ProductInfo({product}: ProductInfoPros ) {
   const [quantity, setQuantity] = useState(1)
+
+  const {addProductToCart} = useContext(CartContext)
 
   function handleDecreaseQuantityClick() {
     setQuantity((prev) => (prev === 1 ? prev : prev - 1))
@@ -30,21 +25,25 @@ export function ProductInfo({product:{basePrice, description, discountPercentage
     setQuantity((prev) => (prev + 1))
   }
   
+  function handleAddToCartClick() {
+    addProductToCart({...product, quantity})
+  }
+
   return (
     <div className="flex flex-col px-5" >
-      <h2 className="text-lg" > {name} </h2>
+      <h2 className="text-lg" > {product.name} </h2>
       
       <div className="flex items-center gap-2" >
-        <h1 className="text-xl font-bold" >{priceFormatter.format(totalPrice)}</h1>
-        {discountPercentage > 0 && (
+        <h1 className="text-xl font-bold" >{priceFormatter.format(product.totalPrice)}</h1>
+        {product.discountPercentage > 0 && (
           <DiscountBadge>
-            {discountPercentage}% 
+            {product.discountPercentage}% 
           </DiscountBadge>
         )}
       </div>
 
-      { discountPercentage > 0 && (
-        <p className="text-sm opacity-60 line-through" >{priceFormatter.format(Number(basePrice))}</p>
+      { product.discountPercentage > 0 && (
+        <p className="text-sm opacity-60 line-through" >{priceFormatter.format(Number(product.basePrice))}</p>
       )}
 
       <div className="flex items-center gap-2 mt-5">
@@ -62,10 +61,13 @@ export function ProductInfo({product:{basePrice, description, discountPercentage
       <div className="mt-8 flex flex-col gap-3" >
         <h3 className="font-bold text-sm">Descrição</h3>
 
-        <p className="text-justify text-sm opacity-60" >{description}</p>
+        <p className="text-justify text-sm opacity-60" >{product.description}</p>
       </div>
       
-      <Button className="mt-8 font-bold uppercase" >
+      <Button 
+        className="mt-8 font-bold uppercase" 
+        onClick={handleAddToCartClick}
+      >
         ADICIONAR AO CARRINHO
       </Button>
 

@@ -8,7 +8,10 @@ const categories = await prismaClient.category.findMany({});
 
   return (
     <div className="p-5 gap-8 flex flex-col" >
-      <Badge className="w-fit gap-1 border-2 border-primary px-3 text-base uppercase py-[0.375rem]" variant="outline" >
+      <Badge 
+        className="w-fit gap-1 border-2 border-primary px-3 text-base uppercase py-[0.375rem]" 
+        variant="outline" 
+      >
         <ShapesIcon size={16} />
         Catálogo
       </Badge>

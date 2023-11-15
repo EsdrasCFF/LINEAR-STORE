@@ -9,6 +9,7 @@ import { Avatar, AvatarImage } from "./avatar";
 import { AvatarFallback } from "@radix-ui/react-avatar";
 import { Separator } from "./separator";
 import Link from "next/link";
+import { Cart } from "./cart";
 
 export function Header() {
 
@@ -106,10 +107,18 @@ export function Header() {
         </h1>
       </Link>
 
+      
+      <Sheet>
+        <SheetTrigger asChild >
+          <Button size="icon" variant="outline" > 
+            <ShoppingCartIcon />
+          </Button>
+        </SheetTrigger>
 
-      <Button size="icon" variant="outline" > 
-        <ShoppingCartIcon />
-      </Button>
+        <SheetContent>
+          <Cart/>
+        </SheetContent>
+      </Sheet>
     </Card>
   )
 }
