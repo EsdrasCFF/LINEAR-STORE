@@ -8,9 +8,22 @@ import { Separator } from "./separator";
 import { priceFormatter } from "@/helpers/formatter";
 import { ScrollArea } from "./scroll-area";
 import { Button } from "./button";
+import { createCheckout } from "@/actions/checkout";
+import { loadStripe } from "@stripe/stripe-js";
 
 export function Cart() {
   const { products, subTotal, total, totalDiscount } = useContext(CartContext);
+
+  async function handleFinishPurchaseClick() {
+    const checkout = await createCheckout(products);
+
+    const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+
+    stripe?.redirectToCheckout({
+      sessionId: checkout.id,
+    })
+
+  }
 
   return (
     <div className="flex flex-col gap-8 h-full" >
@@ -69,7 +82,11 @@ export function Cart() {
           <p className="text-sm font-bold">{priceFormatter.format(total)}</p>
         </div>
 
-        <Button className="uppercase font-bold mt-7" >
+        <Button 
+          className="uppercase font-bold mt-7" 
+          onClick={handleFinishPurchaseClick} 
+          disabled={products.length == 0}
+        >
           Finalizar Compra
         </Button>
       </div>
