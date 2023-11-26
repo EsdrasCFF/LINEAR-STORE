@@ -36,9 +36,7 @@ export const CartContext = createContext<ICartContext>({
 })
 
 export function CartProvider({children}: {children: ReactNode}) {
-  const [products, setProducts] = useState<CartProduct[]>( 
-    JSON.parse(localStorage.getItem("@linear-store/cart-products") || "[]"),
-  )
+  const [products, setProducts] = useState<CartProduct[]>([]);
 
   const subTotal = useMemo(() => {
     return products.reduce((acc, product) => {
@@ -115,6 +113,12 @@ export function CartProvider({children}: {children: ReactNode}) {
       prev.filter((cartProduct) => cartProduct.id !== productId)
     )
   }
+
+  useEffect(() => {
+    setProducts(
+      JSON.parse(localStorage.getItem("@linear-store/cart-products") || "[]"),
+    );
+  }, [])
 
   useEffect(() => {
     localStorage.setItem("@linear-store/cart-products", JSON.stringify(products))
