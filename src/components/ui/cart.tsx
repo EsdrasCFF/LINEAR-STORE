@@ -22,13 +22,10 @@ export function Cart() {
     if(!data?.user) {
       // TODO: redirecionar para o login
     }
-    try {
-      await createOrder(products, (data?.user as any).id);
-    } catch (err) {
-      console.log(err)
-    }
-
-    const checkout = await createCheckout(products);
+    
+    const order = await createOrder(products, (data?.user as any).id);
+  
+    const checkout = await createCheckout(products, order.id);
 
     const stripe = await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
