@@ -17,10 +17,7 @@ export function CategoryItem({category}: CategoryItemProps) {
             width={0}
             height={0}
             sizes="100vw"
-            className="h-auto max-h-[70%] w-auto max-w[80%]"
-            style={{
-              objectFit:"cover"
-            }}
+            className="h-auto max-h-[70%] w-auto max-w-[80%] object-contain"
           />
         </div>
         <div className="bg-accent py-3 rounded-br-lg rounded-bl-lg text-center"> 
